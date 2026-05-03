@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Ronald2Wing_Forum::configuration" title="Magento Forum Configuration" translate="title" />
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::content">
+                    <resource id="Ronald2Wing_Forum::forum" title="Manage Forum" translate="title" />
+                    <resource id="Ronald2Wing_Forum::forum_manager" title="Forum Manager" translate="title">
+                        <resource id="Ronald2Wing_Forum::forum_save" title="Save Forum" translate="title" />
+                        <resource id="Ronald2Wing_Forum::forum_delete" title="Delete Forum" translate="title" />
+                        <resource id="Ronald2Wing_Forum::topic_save" title="Save Topics" translate="title" />
+                        <resource id="Ronald2Wing_Forum::topic_delete" title="Delete Topics" translate="title" />
+                        <resource id="Ronald2Wing_Forum::post_save" title="Save Posts" translate="title" />
+                        <resource id="Ronald2Wing_Forum::post_delete" title="Delete Posts" translate="title" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

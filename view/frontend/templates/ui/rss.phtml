@@ -1,0 +1,6 @@
+<?php if ($block->getForumData()->isRssAllowed()): ?>
+    <div class="forum-rss-container">
+        <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum/images/rss.png')) ?>" alt="<?= $block->escapeHtmlAttr(__('RSS')) ?>" />
+        <a href="<?= $block->escapeUrl($block->getLinkUrl()) ?>" target="_blank" rel="noopener"><?= $block->escapeHtml(__('RSS')) ?></a>
+    </div>
+<?php endif; ?>

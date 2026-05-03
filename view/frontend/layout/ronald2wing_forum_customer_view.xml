@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <head>
+    <css src="Ronald2Wing_Forum/css/forum.css"/>
+    <link src="Ronald2Wing_Forum/js/forum.js"/>
+  </head>
+  <body>
+    <referenceBlock name="breadcrumbs">
+      <action method="addCrumb">
+        <argument name="crumbName" xsi:type="string">Home</argument>
+        <argument name="crumbInfo" xsi:type="array">
+          <item name="title" translate="true" xsi:type="string">Home</item>
+          <item name="label" translate="true" xsi:type="string">Home</item>
+          <item name="link" xsi:type="string">/</item>
+        </argument>
+      </action>
+    </referenceBlock>
+    <referenceContainer name="content">
+      <block cacheable="false" class="Magento\Framework\View\Element\Template" name="forum.customer.view.index" template="Ronald2Wing_Forum::customer/view.phtml">
+        <arguments>
+          <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Customer\View</argument>
+          <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+        </arguments>
+        <block class="Magento\Framework\View\Element\Template" name="forum.index.top" template="Ronald2Wing_Forum::forum/top/block.phtml">
+          <arguments>
+            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Forum\TopBlock</argument>
+            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+          </arguments>
+          <block class="Magento\Framework\View\Element\Template" name="forum.ui.jumpto" template="Ronald2Wing_Forum::ui/jumpto.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Ui\JumpTo</argument>
+                            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+                        </arguments>
+          </block>
+        </block>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

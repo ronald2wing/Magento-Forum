@@ -1,0 +1,74 @@
+<div class="forum-myaccount-container">
+    <form class="form form-forum-myaccount"
+          action="<?= $block->escapeUrl($block->getViewModel()->getFormAction()) ?>"
+          method="post"
+          id="form-validate-forum-myaccount"
+          enctype="multipart/form-data"
+          data-hasrequired="* <?= $block->escapeHtmlAttr(__('Required Fields')) ?>"
+          autocomplete="off"
+          novalidate="novalidate">
+        <?= $block->getBlockHtml('formkey') ?>
+        <div class="forum-user-avatar-container">
+            <img src="<?= $block->escapeUrl($block->getViewModel()->getAvatarImg()) ?>" class="forum-user-avatar" alt="" />
+            <?php if ($block->getViewModel()->getAvatar()): ?>
+                <div class="forum-customer-delete-avatar">
+                    <span class="label">
+                        <input type="checkbox" name="avatar[delete]" />
+                        <?= $block->escapeHtml(__('Remove Avatar')) ?>
+                    </span>
+                </div>
+                <br>
+            <?php endif; ?>
+        </div>
+        <fieldset class="fieldset info">
+            <div class="field field-name-nickname required">
+                <label class="label" for="nickname">
+                    <span><?= $block->escapeHtml(__('Nickname')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" id="nickname" name="nickname"
+                           value="<?= $block->escapeHtmlAttr($block->getViewModel()->getNickName()) ?>"
+                           title="<?= $block->escapeHtmlAttr(__('Nickname')) ?>"
+                           class="input-text required-entry" data-validate="{required:true}" aria-required="true">
+                </div>
+            </div>
+            <div class="field field-name-avatar">
+                <label class="label" for="avatar">
+                    <span><?= $block->escapeHtml(__('Avatar')) ?></span>
+                </label>
+                <div class="control">
+                    <input type="file" name="avatar" class="input-file" /><br>
+                    <p class="note"><?= $block->escapeHtml(__('width: 100px, .jpg, .png, .gif, .jpeg')) ?></p>
+                </div>
+            </div>
+            <div class="field field-name-signature">
+                <label class="label" for="signature">
+                    <span><?= $block->escapeHtml(__('Signature')) ?></span>
+                </label>
+                <div class="control">
+                    <textarea class="forum-myaccount-signature-input" id="signature" name="signature"><?= $block->escapeHtml($block->getViewModel()->getSignature()) ?></textarea>
+                    <br>
+                    <p class="note">
+                        <?= $block->escapeHtml(__('alowed tags: <b>, <ul>, <em>')) ?>
+                    </p>
+                </div>
+            </div>
+        </fieldset>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                    <span><?= $block->escapeHtml(__('Save')) ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($) {
+        var dataForm = $('#form-validate-forum-myaccount');
+        dataForm.mage('validation', {});
+    });
+</script>

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="ronald2wing_forum_notify_customer" label="Ronald2Wing Forum Notify Customer" file="notify_customer.html" type="html" module="Ronald2Wing_Forum" area="frontend"/>
+</config>

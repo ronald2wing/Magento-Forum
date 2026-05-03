@@ -1,0 +1,133 @@
+<?php
+$topics = $block->getViewModel()->getDisplayTopics();
+?>
+<div class="forum-list-container controls-exists clearfix">
+    <h3 class="grid-title">
+        <?php if ($block->getViewModel()->getIsIconsEnabled() && $block->getViewModel()->getIconSrc()): ?>
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . $block->getViewModel()->getIconSrc())) ?>" alt="" />
+        <?php endif; ?>
+        <?= $block->escapeHtml(__('View Forum "%1"', $block->getViewModel()->getForumTitle())) ?>
+    </h3>
+    <div class="forum-grid-controls">
+        <button onclick="document.location.href = '<?= $block->escapeUrl($block->getViewModel()->getAddNewUrl()) ?>'" class="action primary" title="<?= $block->escapeHtmlAttr(__('Add Topic')) ?>">
+            <span><?= $block->escapeHtml(__('Add Topic')) ?></span>
+        </button>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <?php if (!$topics || !$topics->getSize()): ?>
+        <div class="forum-grid-no-data">
+            <?= $block->escapeHtml(__('No Data Found')) ?>
+        </div>
+    <?php else: ?>
+        <div class="toolbar top forum-toolbar">
+            <?= $block->getPagerHtml() ?>
+        </div>
+        <div class="forum-sort">
+            <?= $block->escapeHtml(__('Sort By')) ?>
+            &nbsp;&nbsp;
+            <a <?= $block->getViewModel()->getSortType() == 'asc' ? 'class="selected"' : '' ?>
+               href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl(null, 'asc')) ?>"><?= $block->escapeHtml(__('Oldest')) ?></a>
+            &nbsp;|&nbsp;
+            <a <?= $block->getViewModel()->getSortType() == 'desc' ? 'class="selected"' : '' ?>
+               href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl(null, 'desc')) ?>"><?= $block->escapeHtml(__('Newest')) ?></a>
+        </div>
+        <table class="forum-grid forum-list grid data-table-forum-resp">
+            <thead>
+                <tr>
+                    <th width="35%"><?= $block->escapeHtml(__('Topic')) ?></th>
+                    <th width="15%"><?= $block->escapeHtml(__('Total Posts')) ?></th>
+                    <th width="15%"><?= $block->escapeHtml(__('Views')) ?></th>
+                    <th width="35%"><?= $block->escapeHtml(__('Latest Reply')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($topics as $topic): ?>
+                    <tr>
+                        <td>
+                            <div>
+                                <div class="forum-icons">
+                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'folder_topic.png')) ?>" alt="" />
+                                    <?php if ($block->getViewModel()->getIsIconsEnabled() && $block->getViewModel()->getIconSrc($topic, true)): ?>
+                                        <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . $block->getViewModel()->getIconSrc($topic, true))) ?>" alt="" />
+                                    <?php endif; ?>
+                                </div>
+                                <div class="forum-details">
+                                    <a class="forum-display-description" href="<?= $block->escapeUrl($block->getViewModel()->getTopicViewUrl($topic)) ?>">
+                                        <?= $block->escapeHtml($topic->getTitle()) ?>
+                                    </a>
+                                    <?php if ($topic->getDescription()): ?>
+                                        <div class="forum-topic-description">
+                                            <?= $block->escapeHtml($topic->getDescription()) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="forum-created-time">
+                                        <?= $block->escapeHtml(__('Created')) ?>: <?= $block->escapeHtml($block->getViewModel()->getTimeAccordingToTimeZone($topic->getCreatedAt())) ?>
+                                    </div>
+                                    <div class="forum-created-by">
+                                        <?= $block->escapeHtml(__('Created By: "%1"', $block->getViewModel()->getTopicCreatorName($topic))) ?>
+                                        (<a href="<?= $block->escapeUrl($block->getViewModel()->getTopicCreatorLink($topic)) ?>"><?= $block->escapeHtml($block->getViewModel()->getTopicCreatorName($topic)) ?></a>)
+                                    </div>
+                                    <?php if ($block->getViewModel()->getIsOwner($topic)): ?>
+                                        <div class="forum-topic-controls">
+                                            <a href="<?= $block->escapeUrl($block->getViewModel()->getEditLink($topic)) ?>" class="forum-topic-controls-edit">
+                                                <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'edit_icon.png')) ?>" alt="" />
+                                                <?= $block->escapeHtml(__('Edit')) ?>
+                                            </a>
+                                            &nbsp;
+                                            <?php if ($block->getViewModel()->getIsCustomerAllowedDeleteTopics()): ?>
+                                                <a href="<?= $block->escapeUrl($block->getViewModel()->getDeleteLink($topic)) ?>" class="forum-topic-controls-delete">
+                                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'delete_icon.png')) ?>" alt="" />
+                                                    <?= $block->escapeHtml(__('Delete')) ?>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="total-posts-container">
+                                <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'forum_post.png')) ?>" alt="" />
+                                <?= (int) $topic->getTotalPosts() ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="total-views-container">
+                                <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'view_icon.png')) ?>" alt="" />
+                                <?= $topic->getTotalViews() ? (int) $topic->getTotalViews() : '0' ?>
+                            </div>
+                        </td>
+                        <td>
+                            <?php $latest = $block->getViewModel()->getLatestPostDetails($topic->getLastPostId()); ?>
+                            <div class="forum-latest-reply">
+                                <?php if (!$latest): ?>
+                                    <?= $block->escapeHtml(__('No Data Found')) ?>
+                                <?php else: ?>
+                                    <?php if ($block->getViewModel()->getIsIconsEnabled() && $block->getViewModel()->getLatestIcon($latest)): ?>
+                                        <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . $block->getViewModel()->getLatestIcon($latest))) ?>" alt="" />
+                                    <?php endif; ?>
+                                    <a class="forum-display-description" href="<?= $block->escapeUrl($block->getViewModel()->getLatestViewUrl($latest)) ?>"><?= $block->escapeHtml($block->getViewModel()->getLatestTopicTitle($latest)) ?></a>
+                                    <?php if ($block->getViewModel()->getLatestTopicDescription($latest)): ?>
+                                        <div class="forum-topic-description">
+                                            <?= $block->escapeHtml($block->getViewModel()->getLatestTopicDescription($latest)) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <div class="forum-latest-reply-date">
+                                        <?= $block->escapeHtml(__('Posted: %1', $block->getViewModel()->getLatestPostedDate($latest))) ?>
+                                    </div>
+                                    <div class="forum-latest-reply-user">
+                                        <?= $block->escapeHtml(__('Posted By: %1', $block->getViewModel()->getLatestPostedBy($latest))) ?>
+                                        (<a href="<?= $block->escapeUrl($block->getViewModel()->getLatestPostedByUrl($latest)) ?>"><?= $block->escapeHtml($block->getViewModel()->getLatestPostedBy($latest)) ?></a>)
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">
+            Ronald2Wing_Forum_Responsive_tables.init();
+        </script>
+    <?php endif; ?>
+</div>

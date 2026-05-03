@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="forum" resource="default" engine="innodb" comment="Forums">
+        <column xsi:type="int" name="forum_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Forum ID"/>
+        <column xsi:type="int" name="parent_id" padding="10" unsigned="true" nullable="true" comment="Parent Forum ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="true" comment="Creator User ID"/>
+        <column xsi:type="varchar" name="title" length="255" nullable="false" comment="Forum Title"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Forum Description"/>
+        <column xsi:type="varchar" name="url_key" length="255" nullable="false" comment="URL Key"/>
+        <column xsi:type="varchar" name="meta_description" length="255" nullable="true" comment="Meta Description"/>
+        <column xsi:type="varchar" name="meta_keywords" length="255" nullable="true" comment="Meta Keywords"/>
+        <column xsi:type="varchar" name="icon_id" length="50" nullable="true" comment="Icon ID"/>
+        <column xsi:type="int" name="priority" padding="10" unsigned="false" nullable="false" default="0" comment="Sort Priority"/>
+        <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" default="1" comment="Status"/>
+        <column xsi:type="smallint" name="store_id" padding="6" unsigned="false" nullable="false" default="0" comment="Store ID"/>
+        <column xsi:type="smallint" name="is_deleted" padding="6" unsigned="false" nullable="false" default="0" comment="Is Deleted"/>
+        <column xsi:type="int" name="total_topics" padding="10" unsigned="false" nullable="false" default="0" comment="Total Topics"/>
+        <column xsi:type="int" name="total_posts" padding="10" unsigned="false" nullable="false" default="0" comment="Total Posts"/>
+        <column xsi:type="int" name="last_post_id" padding="10" unsigned="true" nullable="true" comment="Last Post ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="forum_id"/>
+        </constraint>
+        <index referenceId="FORUM_URL_KEY" indexType="btree">
+            <column name="url_key"/>
+        </index>
+        <index referenceId="FORUM_PARENT_ID" indexType="btree">
+            <column name="parent_id"/>
+        </index>
+        <index referenceId="FORUM_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+        <index referenceId="FORUM_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+        <index referenceId="FORUM_IS_DELETED" indexType="btree">
+            <column name="is_deleted"/>
+        </index>
+    </table>
+
+    <table name="forum_topic" resource="default" engine="innodb" comment="Forum Topics">
+        <column xsi:type="int" name="topic_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Topic ID"/>
+        <column xsi:type="int" name="forum_id" padding="10" unsigned="true" nullable="false" comment="Forum ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="true" comment="Author User ID"/>
+        <column xsi:type="varchar" name="title" length="255" nullable="false" comment="Topic Title"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Topic Description (first post summary)"/>
+        <column xsi:type="varchar" name="url_key" length="255" nullable="false" comment="URL Key"/>
+        <column xsi:type="varchar" name="meta_description" length="255" nullable="true" comment="Meta Description"/>
+        <column xsi:type="varchar" name="meta_keywords" length="255" nullable="true" comment="Meta Keywords"/>
+        <column xsi:type="varchar" name="icon_id" length="50" nullable="true" comment="Icon ID"/>
+        <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" default="1" comment="Status"/>
+        <column xsi:type="smallint" name="is_sticky" padding="6" unsigned="false" nullable="false" default="0" comment="Is Sticky"/>
+        <column xsi:type="smallint" name="store_id" padding="6" unsigned="false" nullable="false" default="0" comment="Store ID"/>
+        <column xsi:type="smallint" name="is_deleted" padding="6" unsigned="false" nullable="false" default="0" comment="Is Deleted"/>
+        <column xsi:type="int" name="total_views" padding="10" unsigned="false" nullable="false" default="0" comment="Total Views"/>
+        <column xsi:type="int" name="total_posts" padding="10" unsigned="false" nullable="false" default="0" comment="Total Posts"/>
+        <column xsi:type="int" name="last_post_id" padding="10" unsigned="true" nullable="true" comment="Last Post ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="topic_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FORUM_TOPIC_FORUM_ID_FORUM_FORUM_ID" table="forum_topic" column="forum_id" referenceTable="forum" referenceColumn="forum_id" onDelete="CASCADE"/>
+        <index referenceId="FORUM_TOPIC_FORUM_ID" indexType="btree">
+            <column name="forum_id"/>
+        </index>
+        <index referenceId="FORUM_TOPIC_URL_KEY" indexType="btree">
+            <column name="url_key"/>
+        </index>
+        <index referenceId="FORUM_TOPIC_USER_ID" indexType="btree">
+            <column name="user_id"/>
+        </index>
+        <index referenceId="FORUM_TOPIC_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+        <index referenceId="FORUM_TOPIC_IS_DELETED" indexType="btree">
+            <column name="is_deleted"/>
+        </index>
+    </table>
+
+    <table name="forum_post" resource="default" engine="innodb" comment="Forum Posts">
+        <column xsi:type="int" name="post_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Post ID"/>
+        <column xsi:type="int" name="topic_id" padding="10" unsigned="true" nullable="false" comment="Topic ID"/>
+        <column xsi:type="int" name="forum_id" padding="10" unsigned="true" nullable="false" comment="Forum ID (denormalized)"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="true" comment="Author User ID"/>
+        <column xsi:type="mediumtext" name="content" nullable="true" comment="Post Content (HTML)"/>
+        <column xsi:type="mediumtext" name="content_original" nullable="true" comment="Original Content"/>
+        <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" default="1" comment="Status"/>
+        <column xsi:type="smallint" name="is_sticky" padding="6" unsigned="false" nullable="false" default="0" comment="Is Sticky"/>
+        <column xsi:type="smallint" name="is_deleted" padding="6" unsigned="false" nullable="false" default="0" comment="Is Deleted"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="post_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FORUM_POST_TOPIC_ID_FORUM_TOPIC_TOPIC_ID" table="forum_post" column="topic_id" referenceTable="forum_topic" referenceColumn="topic_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="FORUM_POST_FORUM_ID_FORUM_FORUM_ID" table="forum_post" column="forum_id" referenceTable="forum" referenceColumn="forum_id" onDelete="CASCADE"/>
+        <index referenceId="FORUM_POST_TOPIC_ID" indexType="btree">
+            <column name="topic_id"/>
+        </index>
+        <index referenceId="FORUM_POST_FORUM_ID" indexType="btree">
+            <column name="forum_id"/>
+        </index>
+        <index referenceId="FORUM_POST_USER_ID" indexType="btree">
+            <column name="user_id"/>
+        </index>
+        <index referenceId="FORUM_POST_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+        <index referenceId="FORUM_POST_IS_DELETED" indexType="btree">
+            <column name="is_deleted"/>
+        </index>
+    </table>
+
+    <table name="forum_moderator" resource="default" engine="innodb" comment="Forum Moderators">
+        <column xsi:type="int" name="moderator_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Moderator ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" comment="Magento User ID"/>
+        <column xsi:type="int" name="website_id" padding="10" unsigned="true" nullable="true" comment="Website ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="moderator_id"/>
+        </constraint>
+        <index referenceId="FORUM_MODERATOR_USER_ID" indexType="btree">
+            <column name="user_id"/>
+        </index>
+    </table>
+
+    <table name="forum_access" resource="default" engine="innodb" comment="Forum Customer Group Access">
+        <column xsi:type="int" name="access_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Access ID"/>
+        <column xsi:type="int" name="forum_id" padding="10" unsigned="true" nullable="false" comment="Forum ID"/>
+        <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="false" comment="Customer Group ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="access_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FORUM_ACCESS_FORUM_ID_FORUM_FORUM_ID" table="forum_access" column="forum_id" referenceTable="forum" referenceColumn="forum_id" onDelete="CASCADE"/>
+        <index referenceId="FORUM_ACCESS_FORUM_ID" indexType="btree">
+            <column name="forum_id"/>
+        </index>
+    </table>
+
+    <table name="forum_visitor" resource="default" engine="innodb" comment="Forum Visitors Tracking">
+        <column xsi:type="int" name="visitor_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Visitor ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="true" comment="Magento User ID"/>
+        <column xsi:type="int" name="topic_id" padding="10" unsigned="true" nullable="true" comment="Current Topic ID"/>
+        <column xsi:type="int" name="forum_id" padding="10" unsigned="true" nullable="true" comment="Current Forum ID"/>
+        <column xsi:type="varchar" name="session_id" length="255" nullable="false" comment="Session ID"/>
+        <column xsi:type="timestamp" name="visited_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Last Visit Time"/>
+        <column xsi:type="smallint" name="store_id" padding="6" unsigned="false" nullable="false" default="0" comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="visitor_id"/>
+        </constraint>
+        <index referenceId="FORUM_VISITOR_SESSION_ID" indexType="btree">
+            <column name="session_id"/>
+        </index>
+    </table>
+
+    <table name="forum_notification" resource="default" engine="innodb" comment="Forum Notification Subscriptions">
+        <column xsi:type="int" name="notification_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Notification ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" comment="Magento User ID"/>
+        <column xsi:type="int" name="topic_id" padding="10" unsigned="true" nullable="false" comment="Topic ID"/>
+        <column xsi:type="varchar" name="unsubscribe_hash" length="64" nullable="false" comment="Unsubscribe Hash"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="notification_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FORUM_NOTIFICATION_TOPIC_ID_FORUM_TOPIC_TOPIC_ID" table="forum_notification" column="topic_id" referenceTable="forum_topic" referenceColumn="topic_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="FORUM_NOTIFICATION_USER_TOPIC_UNIQUE">
+            <column name="user_id"/>
+            <column name="topic_id"/>
+        </constraint>
+        <index referenceId="FORUM_NOTIFICATION_HASH" indexType="btree">
+            <column name="unsubscribe_hash"/>
+        </index>
+    </table>
+
+    <table name="forum_report" resource="default" engine="innodb" comment="Forum Post Reports">
+        <column xsi:type="int" name="report_id" padding="10" unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="int" name="post_id" padding="10" unsigned="true" nullable="false"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="true"/>
+        <column xsi:type="varchar" name="reason" length="255" nullable="true"/>
+        <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" default="0" comment="0=new,1=reviewed"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="report_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FORUM_REPORT_POST_ID" table="forum_report" column="post_id" referenceTable="forum_post" referenceColumn="post_id" onDelete="CASCADE"/>
+        <index referenceId="FORUM_REPORT_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+
+    <table name="forum_usersettings" resource="default" engine="innodb" comment="Forum User Settings">
+        <column xsi:type="int" name="settings_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Settings ID"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" comment="Magento User ID"/>
+        <column xsi:type="varchar" name="nickname" length="100" nullable="true" comment="Nickname"/>
+        <column xsi:type="text" name="signature" nullable="true" comment="Forum Signature"/>
+        <column xsi:type="varchar" name="avatar" length="255" nullable="true" comment="Avatar Filename"/>
+        <column xsi:type="int" name="website_id" padding="10" unsigned="true" nullable="true" comment="Website ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="settings_id"/>
+        </constraint>
+        <index referenceId="FORUM_USERSETTINGS_USER_ID" indexType="btree">
+            <column name="user_id"/>
+        </index>
+    </table>
+</schema>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         colors="true"
+         bootstrap="./Test/Unit/bootstrap.php"
+         beStrictAboutChangesToGlobalState="true"
+         beStrictAboutOutputDuringTests="true"
+         beStrictAboutTodoAnnotatedTests="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         verbose="true">
+    <testsuites>
+        <testsuite name="Forum Unit Tests">
+            <directory>./Test/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./Api</directory>
+            <directory suffix=".php">./Helper</directory>
+            <directory suffix=".php">./Model</directory>
+            <directory suffix=".php">./Controller</directory>
+            <directory suffix=".php">./ViewModel</directory>
+        </include>
+    </coverage>
+    <php>
+        <const name="PHPUNIT_TEST" value="1"/>
+    </php>
+</phpunit>

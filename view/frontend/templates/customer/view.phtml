@@ -1,0 +1,38 @@
+<?php
+$userDetails = $block->getViewModel()->getUserData();
+?>
+<div class="main-forum-container forum-user-view-container">
+    <div class="forum-top-block">
+        <?= $block->getChildHtml('forum.index.top') ?>
+    </div>
+    <div class="forum-content-container">
+        <?php if (empty($userDetails) || $userDetails['empty']): ?>
+            <div class="forum-grid-no-data">
+                <?= $block->escapeHtml(__('No Data Found')) ?>
+            </div>
+        <?php else: ?>
+            <div class="forum-user-view">
+                <h2><?= $block->escapeHtml(__('User Details "%1"', $userDetails['nickname'])) ?></h2>
+
+                <div class="forum-avatar-image-container">
+                    <img src="<?= $block->escapeUrl($userDetails['avatar']) ?>" class="forum-avatar-image" alt="" />
+                </div>
+
+                <span class="forum-user-total-posts">
+                    <?= $block->escapeHtml(__('Total topics: %1', $userDetails['total_topics'])) ?>
+                </span>
+                <span class="forum-user-total-posts">
+                    <?= $block->escapeHtml(__('Total posts: %1', $userDetails['total_posts'])) ?>
+                </span>
+                <?php if ($userDetails['joined']): ?>
+                    <span class="forum-user-joined">
+                        <?= $block->escapeHtml(__('Joined: %1', $block->getViewModel()->getTimeAccordingToTimeZone($userDetails['joined']))) ?>
+                    </span>
+                <?php endif; ?>
+                <span class="forum-user-role">
+                    <?= $block->escapeHtml(__('User Role: %1', $userDetails['role'])) ?>
+                </span>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

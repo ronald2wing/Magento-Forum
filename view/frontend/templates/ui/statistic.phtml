@@ -1,0 +1,14 @@
+<?php if ($block->getForumData()->isStatisticAllowed()): ?>
+    <div class="forum-statistic-block">
+        <h4>
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'stats.png')) ?>" alt="" />
+            <?= $block->escapeHtml(__('Statistic')) ?>
+        </h4>
+        <div>
+            <?= $block->escapeHtml(__('Total Forums')) ?>: <b><?= (int) $block->getTotalForums() ?></b>.&nbsp;
+            <?= $block->escapeHtml(__('Total Topics')) ?>: <b><?= (int) $block->getTotalTopics() ?></b>.&nbsp;
+            <?= $block->escapeHtml(__('Total Posts')) ?>: <b><?= (int) $block->getTotalPosts() ?></b>.&nbsp;
+            <?= $block->escapeHtml(__('Total Active Members')) ?>: <b><?= (int) $block->getTotalUsers() ?></b>.&nbsp;
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,30 @@
+{{template config_path="design/email/header_template"}}
+
+<p>{{trans "Hello %1" customer_name}},</p>
+
+<p>{{trans "A new reply was posted in the topic:"}}</p>
+
+<p style="margin:16px 0">
+    <a href="{{var topic_url}}" style="font-size:16px;font-weight:bold;color:#1979c3;text-decoration:none">
+        {{var topic_title}}
+    </a>
+</p>
+
+{{depend post_preview}}
+<div style="background:#f4f4f4;border-left:3px solid #1979c3;padding:12px;margin:12px 0;font-size:13px;color:#333">
+    {{var post_preview|raw}}
+</div>
+{{/depend}}
+
+<p style="margin-top:24px">
+    <a href="{{var topic_url}}" style="background:#1979c3;color:#fff;padding:10px 20px;text-decoration:none;border-radius:3px;display:inline-block">
+        {{trans "View Topic"}}
+    </a>
+</p>
+
+<p style="margin-top:24px;font-size:11px;color:#999">
+    {{trans "To unsubscribe from notifications for this topic,"}}
+    <a href="{{var unsubscribe_url}}">{{trans "click here"}}</a>.
+</p>
+
+{{template config_path="design/email/footer_template"}}

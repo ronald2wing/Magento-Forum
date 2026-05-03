@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <head>
+    <link src="Ronald2Wing_Forum/tinymce/tinymce.min.js"/>
+    <link src="Ronald2Wing_Forum/ronald2wingforum/js/init.js"/>
+  </head>
+  <body>
+    <referenceContainer name="content">
+      <block class="Ronald2Wing\Forum\Block\Adminhtml\Post\Edit" name="forum_post_edit"/>
+    </referenceContainer>
+    <referenceContainer name="left">
+      <block class="Ronald2Wing\Forum\Block\Adminhtml\Post\Edit\Tabs" name="forum_post_edit_tabs">
+        <block class="Ronald2Wing\Forum\Block\Adminhtml\Post\Edit\Tab\Main" name="forum_post_edit_tab_main"/>
+        <action method="addTab">
+          <argument name="name" xsi:type="string">main_section</argument>
+          <argument name="block" xsi:type="string">forum_post_edit_tab_main</argument>
+        </action>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

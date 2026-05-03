@@ -1,0 +1,57 @@
+<?php
+$reports = $block->getReports();
+?>
+<form method="post" action="<?= $block->escapeUrl($block->getUrl('*/*/massReview')) ?>">
+    <?= $block->getBlockHtml('formkey') ?>
+    <div class="admin__data-grid-wrap">
+        <table class="data-grid">
+            <thead>
+                <tr>
+                    <th class="data-grid-th">
+                        <span class="data-grid-cell-content">
+                            <input type="checkbox" onclick="var inputs = document.querySelectorAll('.report-checkbox'); for (var i = 0; i < inputs.length; i++) { inputs[i].checked = this.checked; }" />
+                        </span>
+                    </th>
+                    <th class="data-grid-th"><span class="data-grid-cell-content"><?= $block->escapeHtml(__('ID')) ?></span></th>
+                    <th class="data-grid-th"><span class="data-grid-cell-content"><?= $block->escapeHtml(__('Post ID')) ?></span></th>
+                    <th class="data-grid-th"><span class="data-grid-cell-content"><?= $block->escapeHtml(__('User ID')) ?></span></th>
+                    <th class="data-grid-th"><span class="data-grid-cell-content"><?= $block->escapeHtml(__('Reason')) ?></span></th>
+                    <th class="data-grid-th"><span class="data-grid-cell-content"><?= $block->escapeHtml(__('Status')) ?></span></th>
+                    <th class="data-grid-th"><span class="data-grid-cell-content"><?= $block->escapeHtml(__('Created At')) ?></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!$reports->getSize()): ?>
+                    <tr>
+                        <td colspan="7" class="data-grid-cell-content" style="text-align:center; padding:20px;">
+                            <?= $block->escapeHtml(__('No reports found.')) ?>
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($reports as $report): ?>
+                        <tr>
+                            <td class="data-grid-cell-content">
+                                <input type="checkbox" name="selected[]" value="<?= (int) $report->getId() ?>" class="report-checkbox" />
+                            </td>
+                            <td class="data-grid-cell-content"><?= (int) $report->getId() ?></td>
+                            <td class="data-grid-cell-content">
+                                <a href="<?= $block->escapeUrl($block->getUrl('ronald2wing_forum/post/edit', ['id' => $report->getPostId()])) ?>">
+                                    <?= (int) $report->getPostId() ?>
+                                </a>
+                            </td>
+                            <td class="data-grid-cell-content"><?= (int) $report->getUserId() ?></td>
+                            <td class="data-grid-cell-content"><?= $block->escapeHtml((string) $report->getReason()) ?></td>
+                            <td class="data-grid-cell-content"><?= $block->escapeHtml($block->getStatusLabel($report->getStatus())) ?></td>
+                            <td class="data-grid-cell-content"><?= $block->escapeHtml((string) $report->getCreatedAt()) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <div style="margin-top:10px;">
+        <button type="submit" class="action-primary scalable">
+            <span><?= $block->escapeHtml(__('Mark Reviewed')) ?></span>
+        </button>
+    </div>
+</form>

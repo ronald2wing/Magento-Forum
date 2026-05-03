@@ -1,0 +1,91 @@
+<?php
+$topicsCollection = $block->getViewModel()->getCollection();
+if ($topicsCollection):
+?>
+    <?php if ($block->getViewModel()->getIsModerator()): ?>
+        <div class="forum-logged-moderator">
+            <?= $block->escapeHtml(__('You are logged as moderator')) ?>
+        </div>
+    <?php endif; ?>
+    <div class="forum-myaccount-grid-container">
+        <?php if (!$topicsCollection->getSize()): ?>
+            <div class="forum-grid-no-data">
+                <?= $block->escapeHtml(__('No Data Found')) ?>
+            </div>
+        <?php else: ?>
+            <div class="toolbar top forum-toolbar">
+                <?= $block->getPagerHtml() ?>
+            </div>
+
+            <div class="forum-sort">
+                <?= $block->escapeHtml(__('Sort By')) ?>
+                &nbsp;&nbsp;
+                <a <?= $block->getViewModel()->getSortType() == 'asc' ? 'class="selected"' : '' ?>
+                   href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl('asc')) ?>"><?= $block->escapeHtml(__('Oldest')) ?></a>
+                &nbsp;|&nbsp;
+                <a <?= $block->getViewModel()->getSortType() == 'desc' ? 'class="selected"' : '' ?>
+                   href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl('desc')) ?>"><?= $block->escapeHtml(__('Newest')) ?></a>
+            </div>
+
+            <table class="forum-grid forum-list grid forum-my-topics">
+                <thead>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Parent Forum')) ?></th>
+                        <th><?= $block->escapeHtml(__('Topic Details')) ?></th>
+                        <th width="1%"><?= $block->escapeHtml(__('Action')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($topicsCollection as $_topic):
+                        $parentForum = $block->getViewModel()->getParentForum($_topic);
+                    ?>
+                        <tr>
+                            <td>
+                                <div class="forum-myaccount-parent-forum">
+                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'folder_forum.png')) ?>" alt="" />
+                                    <a href="<?= $block->escapeUrl($block->getViewModel()->getParentForumUrl($parentForum)) ?>">
+                                        <?= $block->escapeHtml($parentForum->getTitle()) ?>
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="forum-myaccount-topic">
+                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'folder_topic.png')) ?>" alt="" />
+                                    <a href="<?= $block->escapeUrl($block->getViewModel()->getTopicUrl($parentForum, $_topic)) ?>">
+                                        <?= $block->escapeHtml($_topic->getTitle()) ?>
+                                    </a>
+                                </div>
+                                <span class="forum-myaccount-post-description-posted">
+                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'clock_icon.png')) ?>" alt="" />
+                                    <?= $block->escapeHtml(__('Added: %1', $block->getViewModel()->getTimeAccordingToTimeZone($_topic->getCreatedAt()))) ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php if ($block->getViewModel()->getIsCustomerAllowedDeleteTopics()): ?>
+                                    <a href="<?= $block->escapeUrl($block->getViewModel()->getDeleteLink($_topic)) ?>" class="my-forum-account delete-link">
+                                        <span class="nobr"><img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'delete_icon.png')) ?>" alt="" />
+                                        <?= $block->escapeHtml(__('Delete')) ?></span>
+                                    </a>
+                                <?php endif; ?>
+                                <a href="<?= $block->escapeUrl($block->getViewModel()->getEditLink($_topic)) ?>" class="my-forum-account edit-link">
+                                    <span class="nobr"><img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'edit_icon.png')) ?>" alt="" />
+                                    <?= $block->escapeHtml(__('Edit')) ?></span>
+                                </a>
+                                <a href="<?= $block->escapeUrl($block->getViewModel()->getViewLink($_topic)) ?>" class="my-forum-account view-link">
+                                    <span class="nobr"><img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'view_icon.png')) ?>" alt="" />
+                                    <?= $block->escapeHtml(__('View')) ?></span>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+        <div class="clearfix back-to-forum-url">
+            <a href="<?= $block->escapeUrl($block->getViewModel()->getForumUrl()) ?>">
+                <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'back_icon.png')) ?>" alt="" />
+                <?= $block->escapeHtml(__('Back to Forum')) ?>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,22 @@
+<?php if ($block->getForumData()->isBookmarksAllowed()): ?>
+    <form id="ronald2wing-forum-bookmarks-form"
+          action="<?= $block->escapeUrl($block->getActionForm()) ?>"
+          method="post"></form>
+    <div class="forum-bookmarks-container">
+        <?php if ($block->getIsShowAddButton()): ?>
+            <button
+                onclick="ronald2wingForumBookmarks.addBookMark(<?= (int) $block->getTopicId() ?>)"
+                class="action secondary"
+                title="<?= $block->escapeHtmlAttr(__('Add to Bookmark')) ?>"
+                type="button">
+                <span><?= $block->escapeHtml(__('Add to Bookmark')) ?></span>
+            </button>
+        <?php endif; ?>
+        <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum/images/bookmark.png')) ?>" alt="" />
+        <?= $block->escapeHtml(__('You have %1 bookmarked items', '<span id="ronald2wing-forum-zero-bookmarks">0</span><a href="javascript:void(0)" onclick="ronald2wingForumBookmarks.goToBookmarkPage()" id="ronald2wing-forum-bookmarks-link"></a>')) ?>
+    </div>
+
+    <script type="text/javascript">
+        ronald2wingForumBookmarks.showBookmarks();
+    </script>
+<?php endif; ?>

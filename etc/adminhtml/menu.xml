@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ronald2Wing_Forum::forum" title="Forum" translate="title" module="Ronald2Wing_Forum" sortOrder="80" parent="Magento_Backend::content" resource="Ronald2Wing_Forum::forum"/>
+        <add id="Ronald2Wing_Forum::forum_manage" title="Manage Forums" translate="title" module="Ronald2Wing_Forum" sortOrder="10" parent="Ronald2Wing_Forum::forum" action="ronald2wing_forum/forum/index" resource="Ronald2Wing_Forum::forum"/>
+        <add id="Ronald2Wing_Forum::topic_manage" title="Manage Topics" translate="title" module="Ronald2Wing_Forum" sortOrder="20" parent="Ronald2Wing_Forum::forum" action="ronald2wing_forum/topic/index" resource="Ronald2Wing_Forum::forum"/>
+        <add id="Ronald2Wing_Forum::post_manage" title="Manage Posts" translate="title" module="Ronald2Wing_Forum" sortOrder="30" parent="Ronald2Wing_Forum::forum" action="ronald2wing_forum/post/index" resource="Ronald2Wing_Forum::forum"/>
+        <add id="Ronald2Wing_Forum::moderator_manage" title="Manage Moderators" translate="title" module="Ronald2Wing_Forum" sortOrder="40" parent="Ronald2Wing_Forum::forum" action="ronald2wing_forum/moderator/index" resource="Ronald2Wing_Forum::forum"/>
+        <add id="Ronald2Wing_Forum::report_manage" title="Manage Reports" translate="title" module="Ronald2Wing_Forum" sortOrder="35" parent="Ronald2Wing_Forum::forum" action="ronald2wing_forum/report/index" resource="Ronald2Wing_Forum::forum"/>
+        <add id="Ronald2Wing_Forum::configuration" title="Configuration" translate="title" module="Ronald2Wing_Forum" sortOrder="50" parent="Ronald2Wing_Forum::forum" action="adminhtml/system_config/edit/section/ronald2wing_forum" resource="Ronald2Wing_Forum::configuration"/>
+    </menu>
+</config>

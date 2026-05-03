@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title translate="true">Unsubscribe</title>
+        <css src="Ronald2Wing_Forum/css/forum.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block cacheable="false" class="Magento\Framework\View\Element\Template" name="forum.notify.remove" template="Ronald2Wing_Forum::notify/remove.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Notify\Remove</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <body>
+    <referenceContainer name="content">
+      <block class="Ronald2Wing\Forum\Block\Adminhtml\Adminsettings\Edit" name="forum_adminsettings_index"/>
+    </referenceContainer>
+    <referenceContainer name="left">
+      <block class="Ronald2Wing\Forum\Block\Adminhtml\Adminsettings\Edit\Tabs" name="forum_adminsettings_tabs">
+        <block class="Ronald2Wing\Forum\Block\Adminhtml\Adminsettings\Edit\Tab\Main" name="forum_adminsettings_tab_main"/>
+        <action method="addTab">
+          <argument name="name" xsi:type="string">main_section</argument>
+          <argument name="block" xsi:type="string">forum_adminsettings_tab_main</argument>
+        </action>
+      </block>
+    </referenceContainer>
+  </body>
+</page>
+

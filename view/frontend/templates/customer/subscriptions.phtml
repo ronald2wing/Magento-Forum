@@ -1,0 +1,44 @@
+<?php
+$viewModel = $block->getViewModel();
+$subscriptions = $viewModel->getSubscriptions();
+?>
+<div class="forum-subscriptions">
+    <?php if (empty($subscriptions)): ?>
+        <p><?= $block->escapeHtml(__('You are not subscribed to any topics.')) ?></p>
+    <?php else: ?>
+        <table class="data table forum-grid forum-list grid">
+            <thead>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Topic')) ?></th>
+                    <th><?= $block->escapeHtml(__('Forum')) ?></th>
+                    <th><?= $block->escapeHtml(__('Subscribed')) ?></th>
+                    <th><?= $block->escapeHtml(__('Action')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($subscriptions as $sub): ?>
+                <tr>
+                    <td>
+                        <a href="<?= $block->escapeUrl($viewModel->getTopicUrl($sub['forum_url_key'], $sub['url_key'])) ?>">
+                            <?= $block->escapeHtml($sub['title']) ?>
+                        </a>
+                    </td>
+                    <td><?= $block->escapeHtml($sub['forum_title']) ?></td>
+                    <td><?= $block->escapeHtml($sub['created_at']) ?></td>
+                    <td>
+                        <a href="<?= $block->escapeUrl($viewModel->getUnsubscribeUrl($sub['unsubscribe_hash'])) ?>"
+                           class="action unsubscribe">
+                            <?= $block->escapeHtml(__('Unsubscribe')) ?>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+    <div class="clearfix back-to-forum-url">
+        <a href="<?= $block->escapeUrl($block->getUrl('forum')) ?>">
+            <?= $block->escapeHtml(__('Back to Forum')) ?>
+        </a>
+    </div>
+</div>

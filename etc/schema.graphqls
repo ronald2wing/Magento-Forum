@@ -1,0 +1,121 @@
+type Forum @doc(description: "Forum entity") {
+    forum_id: Int @doc(description: "Forum ID")
+    parent_id: Int @doc(description: "Parent forum ID")
+    title: String @doc(description: "Forum title")
+    description: String @doc(description: "Forum description")
+    url_key: String @doc(description: "URL key for SEO-friendly URLs")
+    meta_description: String @doc(description: "Meta description for SEO")
+    meta_keywords: String @doc(description: "Meta keywords")
+    icon_id: String @doc(description: "Icon identifier")
+    priority: Int @doc(description: "Sort order priority")
+    status: Int @doc(description: "Status (1=enabled, 0=disabled)")
+    store_id: Int @doc(description: "Store view ID")
+    total_topics: Int @doc(description: "Total topics in this forum")
+    total_posts: Int @doc(description: "Total posts in this forum")
+    last_post: ForumPost @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\ForumStatsProcessor") @doc(description: "Latest post in this forum")
+    created_at: String @doc(description: "Creation timestamp")
+    updated_at: String @doc(description: "Last update timestamp")
+}
+
+type ForumTopic @doc(description: "Forum topic/discussion entity") {
+    topic_id: Int @doc(description: "Topic ID")
+    forum_id: Int @doc(description: "Parent forum ID")
+    forum: Forum @doc(description: "Parent forum")
+    title: String @doc(description: "Topic title")
+    description: String @doc(description: "Topic description")
+    url_key: String @doc(description: "URL key")
+    icon_id: String @doc(description: "Icon identifier")
+    status: Int @doc(description: "Status")
+    is_sticky: Int @doc(description: "Is sticky")
+    total_views: Int @doc(description: "Total view count")
+    total_posts: Int @doc(description: "Total post count")
+    last_post: ForumPost @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\TopicStatsProcessor") @doc(description: "Latest post")
+    first_post: ForumPost @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\TopicStatsProcessor") @doc(description: "First post in topic")
+    created_at: String @doc(description: "Creation timestamp")
+    updated_at: String @doc(description: "Last update timestamp")
+}
+
+type ForumPost @doc(description: "Forum post/reply entity") {
+    post_id: Int @doc(description: "Post ID")
+    topic_id: Int @doc(description: "Parent topic ID")
+    forum_id: Int @doc(description: "Parent forum ID")
+    user_id: Int @doc(description: "Author user ID")
+    content: String @doc(description: "Post HTML content")
+    status: Int @doc(description: "Status")
+    is_sticky: Int @doc(description: "Is sticky")
+    created_at: String @doc(description: "Creation timestamp")
+    updated_at: String @doc(description: "Last update timestamp")
+}
+
+type ForumUserSettings @doc(description: "Forum user profile settings") {
+    user_id: Int @doc(description: "User ID")
+    nickname: String @doc(description: "User nickname")
+    signature: String @doc(description: "Forum signature")
+    avatar_url: String @doc(description: "Avatar image URL")
+    total_topics: Int @doc(description: "Total topics authored")
+    total_posts: Int @doc(description: "Total posts authored")
+    role: String @doc(description: "User role (User/Moderator)")
+}
+
+input ForumSearchInput @doc(description: "Search input for forum posts and topics") {
+    query: String! @doc(description: "Search query string")
+    type: String @doc(description: "Search type: post or topic, defaults to post")
+    forum_id: Int @doc(description: "Limit search to specific forum")
+}
+
+type Query {
+    forums(
+        pageSize: Int = 10 @doc(description: "Page size")
+        currentPage: Int = 1 @doc(description: "Current page")
+    ): Forums @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\Forums") @doc(description: "Get forums list")
+
+    forumTopics(
+        forumId: Int! @doc(description: "Forum ID")
+        pageSize: Int = 10 @doc(description: "Page size")
+        currentPage: Int = 1 @doc(description: "Current page")
+    ): ForumTopics @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\ForumTopics") @doc(description: "Get topics in a forum")
+
+    forumPosts(
+        topicId: Int! @doc(description: "Topic ID")
+        pageSize: Int = 10 @doc(description: "Page size")
+        currentPage: Int = 1 @doc(description: "Current page")
+    ): ForumPosts @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\ForumPosts") @doc(description: "Get posts in a topic")
+
+    forumPost(
+        postId: Int! @doc(description: "Post ID")
+    ): ForumPost @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\ForumPost") @doc(description: "Get single post")
+
+    forumSearch(
+        input: ForumSearchInput! @doc(description: "Search input")
+        pageSize: Int = 10
+        currentPage: Int = 1
+    ): ForumPosts @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\ForumSearch") @doc(description: "Search forum posts and topics")
+
+    forumUserSettings(
+        userId: Int! @doc(description: "User ID")
+    ): ForumUserSettings @resolver(class: "Ronald2Wing\\Forum\\Model\\Resolver\\ForumUserSettings") @doc(description: "Get forum user settings")
+}
+
+type Forums {
+    items: [Forum]!
+    total_count: Int!
+    page_info: SearchResultPageInfo
+}
+
+type ForumTopics {
+    items: [ForumTopic]!
+    total_count: Int!
+    page_info: SearchResultPageInfo
+}
+
+type ForumPosts {
+    items: [ForumPost]!
+    total_count: Int!
+    page_info: SearchResultPageInfo
+}
+
+type SearchResultPageInfo {
+    page_size: Int!
+    current_page: Int!
+    total_pages: Int!
+}

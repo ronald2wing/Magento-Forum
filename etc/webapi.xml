@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- Forums -->
+    <route url="/V1/forums" method="GET">
+        <service class="Ronald2Wing\Forum\Api\ForumRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/forums/:forumId" method="GET">
+        <service class="Ronald2Wing\Forum\Api\ForumRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/forums" method="POST">
+        <service class="Ronald2Wing\Forum\Api\ForumRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Ronald2Wing_Forum::forum_manager"/>
+        </resources>
+    </route>
+    <route url="/V1/forums/:forumId" method="DELETE">
+        <service class="Ronald2Wing\Forum\Api\ForumRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Ronald2Wing_Forum::forum_manager"/>
+        </resources>
+    </route>
+
+    <!-- Topics -->
+    <route url="/V1/forums/:forumId/topics" method="GET">
+        <service class="Ronald2Wing\Forum\Api\TopicRepositoryInterface" method="getListByForum"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/topics/:topicId" method="GET">
+        <service class="Ronald2Wing\Forum\Api\TopicRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/topics" method="POST">
+        <service class="Ronald2Wing\Forum\Api\TopicRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Magento_Customer::manage"/>
+        </resources>
+    </route>
+    <route url="/V1/topics/:topicId" method="DELETE">
+        <service class="Ronald2Wing\Forum\Api\TopicRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Magento_Customer::manage"/>
+        </resources>
+    </route>
+
+    <!-- Posts -->
+    <route url="/V1/topics/:topicId/posts" method="GET">
+        <service class="Ronald2Wing\Forum\Api\PostRepositoryInterface" method="getListByTopic"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/posts/:postId" method="GET">
+        <service class="Ronald2Wing\Forum\Api\PostRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/posts" method="POST">
+        <service class="Ronald2Wing\Forum\Api\PostRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Magento_Customer::manage"/>
+        </resources>
+    </route>
+    <route url="/V1/posts/:postId" method="DELETE">
+        <service class="Ronald2Wing\Forum\Api\PostRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Magento_Customer::manage"/>
+        </resources>
+    </route>
+
+    <!-- Moderators -->
+    <route url="/V1/forum/moderators" method="GET">
+        <service class="Ronald2Wing\Forum\Api\ModeratorRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Ronald2Wing_Forum::forum_manager"/>
+        </resources>
+    </route>
+    <route url="/V1/forum/moderators" method="POST">
+        <service class="Ronald2Wing\Forum\Api\ModeratorRepositoryInterface" method="addModerator"/>
+        <resources>
+            <resource ref="Ronald2Wing_Forum::forum_manager"/>
+        </resources>
+    </route>
+    <route url="/V1/forum/moderators/:userId" method="DELETE">
+        <service class="Ronald2Wing\Forum\Api\ModeratorRepositoryInterface" method="removeModerator"/>
+        <resources>
+            <resource ref="Ronald2Wing_Forum::forum_manager"/>
+        </resources>
+    </route>
+</routes>

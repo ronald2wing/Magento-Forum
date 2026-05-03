@@ -1,0 +1,9 @@
+<?php if ($block->getForumData()->isWhoIsOnlineAllowed()): ?>
+    <div class="forum-who-is-online-block">
+        <h4>
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'users.png')) ?>" alt="" />
+            <?= $block->escapeHtml(__('Who is online')) ?>
+        </h4>
+        <?= $block->escapeHtml(__('Users browsing this forum %1 user online :: %2 logged customers and %3 guest (based on users active over the past 5 minutes)', (int) $block->getTotalUsers(), (int) $block->getLoggedInOnly(), (int) $block->getQuestsOnly())) ?>
+    </div>
+<?php endif; ?>

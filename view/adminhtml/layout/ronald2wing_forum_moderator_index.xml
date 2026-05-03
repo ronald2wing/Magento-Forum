@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- 
+
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <!-- update handle="formkey"/ -->
+  <!--body>
+    <referenceContainer name="content">
+      <uiComponent name="moderator_index_listing"/>
+    </referenceContainer >
+  </body -->
+  <body>
+    <referenceContainer name="content">
+      <block class="Ronald2Wing\Forum\Block\Adminhtml\Moderator\Index" name="moderator_manage" template="Ronald2Wing_Forum::moderator/tabs.phtml" />
+    </referenceContainer>
+    
+    <referenceContainer name="left">
+      <block class="Ronald2Wing\Forum\Block\Adminhtml\Moderator\Tabs" name="moderator_manage_tabs">
+        <block class="Ronald2Wing\Forum\Block\Adminhtml\Moderator\Tab\Main" name="moderator_manage_tab_main" />
+        <block class="Ronald2Wing\Forum\Block\Adminhtml\Moderator\Tab\Customers" name="moderator_manage_tab_customers" />
+        <!-- uiComponent name="moderator_index_listing" / -->
+        <action method="addTab">
+          <argument name="name" xsi:type="string">main_section</argument>
+          <argument name="block" xsi:type="string">moderator_manage_tab_main</argument>
+        </action>
+        <action method="addTab">
+          <argument name="name" xsi:type="string">customers_section</argument>
+          <argument name="block" xsi:type="string">moderator_manage_tab_customers</argument>
+          <!-- argument name="class"  xsi:type="string">ajax</argument -->
+        </action>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

@@ -1,0 +1,27 @@
+<div class="forum-dashboard-stats">
+    <div class="admin__data-grid-wrap">
+        <table class="data-grid">
+            <thead><tr><th colspan="2"><?= $block->escapeHtml(__('Forum Statistics')) ?></th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><?= $block->escapeHtml(__('Total Forums')) ?></td>
+                    <td><?= (int) $block->getTotalForums() ?></td>
+                </tr>
+                <tr>
+                    <td><?= $block->escapeHtml(__('Total Topics')) ?></td>
+                    <td><?= (int) $block->getTotalTopics() ?></td>
+                </tr>
+                <tr>
+                    <td><?= $block->escapeHtml(__('Total Posts')) ?></td>
+                    <td><?= (int) $block->getTotalPosts() ?></td>
+                </tr>
+                <tr>
+                    <td><?= $block->escapeHtml(__('Pending Posts')) ?></td>
+                    <td style="<?= $block->getTotalPendingPosts() > 0 ? 'color: #e02b27; font-weight: bold' : '' ?>">
+                        <?= (int) $block->getTotalPendingPosts() ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

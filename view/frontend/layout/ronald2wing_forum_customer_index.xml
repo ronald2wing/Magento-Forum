@@ -1,0 +1,22 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<update handle="customer_account"/>
+  <head>
+    <title translate="true">My Forum Account</title>
+    <css src="Ronald2Wing_Forum/css/forum.css"/>
+  </head>
+  <body>
+    <referenceBlock name="page.main.title">
+      <action method="setPageTitle">
+        <argument translate="true" name="title" xsi:type="string">My Forum Account</argument>
+      </action>
+    </referenceBlock>
+    <referenceContainer name="content">
+      <block cacheable="false" class="Magento\Framework\View\Element\Template" name="my_forum_account" template="Ronald2Wing_Forum::customer/index.phtml">
+        <arguments>
+          <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Customer\Index</argument>
+          <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+        </arguments>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

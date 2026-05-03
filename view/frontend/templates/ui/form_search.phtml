@@ -1,0 +1,23 @@
+<?php if ($block->getForumData()->isSearchAllowed()): ?>
+    <div class="forum-search-container">
+        <form data-mage-init='{"validation": {"errorClass": "mage-error"}}' id="search-forum-form" class="search-forum-form" method="post" action="<?= $block->escapeUrl($block->getSearchAction()) ?>">
+            <div class="field search-forum">
+                <input type="text"
+                       name="<?= $block->escapeHtmlAttr($block->getNameSearch()) ?>"
+                       value="<?= $block->escapeHtmlAttr($block->getSearchPhrase()) ?>"
+                       data-validate="{required:true}"
+                       placeholder="<?= $block->escapeHtmlAttr(__('Search forum...')) ?>" />
+            </div>
+            <div class="actions">
+                <button class="action primary" title="<?= $block->escapeHtmlAttr(__('Search')) ?>" type="submit">
+                    <span><?= $block->escapeHtml(__('Search')) ?></span>
+                </button>
+                <?php if ($block->getSearchPhrase()): ?>
+                    <button onclick="document.location.href='<?= $block->escapeUrl($block->getResetAction()) ?>';" class="action secondary" title="<?= $block->escapeHtmlAttr(__('Reset Search')) ?>" type="button">
+                        <span><?= $block->escapeHtml(__('Reset Search')) ?></span>
+                    </button>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div>
+<?php endif; ?>

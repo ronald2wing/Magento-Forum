@@ -1,0 +1,6 @@
+<?php if ($block->getViewModel()->isSuccess()): ?>
+    <p><?= $block->escapeHtml(__('You have been unsubscribed from this topic.')) ?></p>
+<?php else: ?>
+    <p><?= $block->escapeHtml(__('Invalid or expired unsubscribe link.')) ?></p>
+<?php endif; ?>
+<p><a href="<?= $block->escapeUrl($block->getUrl('forum')) ?>"><?= $block->escapeHtml(__('Back to Forum')) ?></a></p>

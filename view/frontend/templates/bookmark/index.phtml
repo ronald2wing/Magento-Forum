@@ -1,0 +1,74 @@
+<?php
+$bookmarks_ids = $block->getViewModel()->getBookmarksIds();
+?>
+<div class="main-forum-container">
+    <div class="forum-top-block">
+        <?= $block->getChildHtml('forum.index.top') ?>
+    </div>
+    <div class="forum-content-container forum-content-bookmark-container">
+        <div class="forum-list-container clearfix">
+            <h3 class="grid-title">
+                <?= $block->escapeHtml(__('My Bookmarks')) ?>
+            </h3>
+        </div>
+
+        <table class="forum-grid forum-list grid" id="ronald2wing-forum-table-bookmark">
+            <thead>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Forum')) ?></th>
+                    <th><?= $block->escapeHtml(__('Topic')) ?></th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!$bookmarks_ids || !is_array($bookmarks_ids)): ?>
+                    <tr>
+                        <td colspan="3">
+                            <div class="forum-grid-no-data">
+                                <?= $block->escapeHtml(__('No Data Found')) ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($bookmarks_ids as $topic_id):
+                        $item = $block->getViewModel()->getItem($topic_id);
+                        if (!$item):
+                            continue;
+                        endif;
+                    ?>
+                        <tr id="ronald2wing-forum-row-id-<?= $block->escapeHtmlAttr($topic_id) ?>">
+                            <td class="bookmark-forum-item">
+                                <div class="forum-icons">
+                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'folder_forum.png')) ?>" alt="" />
+                                </div>
+                                <div class="forum-details">
+                                    <a class="forum-display-description" href="<?= $block->escapeUrl($block->getViewModel()->getItemUrl($item->getParentForum())) ?>"><?= $block->escapeHtml($item->getParentForum()->getTitle()) ?></a>
+                                    <div class="forum-created-time">
+                                        <?= $block->escapeHtml(__('Created')) ?>: <?= $block->escapeHtml($block->getViewModel()->getTimeAccordingToTimeZone($item->getParentForum()->getCreatedAt())) ?>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="bookmark-topic-item">
+                                <div class="forum-icons">
+                                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'folder_topic.png')) ?>" alt="" />
+                                </div>
+                                <div class="forum-details">
+                                    <a class="forum-display-description" href="<?= $block->escapeUrl($block->getViewModel()->getItemUrl($item->getParentForum(), $item)) ?>"><?= $block->escapeHtml($item->getTitle()) ?></a>
+                                    <div class="forum-created-time">
+                                        <?= $block->escapeHtml(__('Created')) ?>: <?= $block->escapeHtml($block->getViewModel()->getTimeAccordingToTimeZone($item->getCreatedAt())) ?>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="bookmark-manage-item">
+                                <a href="javascript:void(0)" onclick="ronald2wingForumBookmarks.removeBookmark(<?= (int) $topic_id ?>)"><?= $block->escapeHtml(__('Delete')) ?></a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+        <div class="forum-bottom-block">
+            <?= $block->getChildHtml('forum.index.bottom') ?>
+        </div>
+    </div>
+</div>

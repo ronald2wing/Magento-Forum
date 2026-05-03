@@ -1,0 +1,45 @@
+<?php
+$collection = $block->getViewModel()->getCollection();
+?>
+<div class="forum-search-results-topics forum-search-results">
+    <div class="clearfix">&nbsp;</div>
+    <?php if (!$collection || !$collection->getSize()): ?>
+        <div class="forum-grid-no-data">
+            <?= $block->escapeHtml(__('No Data Found')) ?>
+        </div>
+    <?php else: ?>
+        <div class="toolbar top forum-toolbar">
+            <?= $block->getPagerHtml() ?>
+        </div>
+
+        <div class="forum-sort">
+            <?= $block->escapeHtml(__('Sort By')) ?>
+            &nbsp;&nbsp;
+            <a <?= $block->getViewModel()->getSortType() == 'asc' ? 'class="selected"' : '' ?>
+               href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl('asc')) ?>"><?= $block->escapeHtml(__('Oldest')) ?></a>
+            &nbsp;|&nbsp;
+            <a <?= $block->getViewModel()->getSortType() == 'desc' ? 'class="selected"' : '' ?>
+               href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl('desc')) ?>"><?= $block->escapeHtml(__('Newest')) ?></a>
+        </div>
+
+        <table class="forum-grid forum-list grid">
+            <thead>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Search Results')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($collection as $_item): ?>
+                    <tr>
+                        <td>
+                            <div class="forum-search-topic">
+                                <?= $block->escapeHtml(__('Topic: "%1"', $block->getViewModel()->setMarkPost($_item->getTitle()))) ?>
+                                (<a href="<?= $block->escapeUrl($block->getViewModel()->getTopicViewUrl($_item)) ?>"><?= $block->escapeHtml(__('View Topic')) ?></a>)
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>

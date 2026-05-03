@@ -1,0 +1,26 @@
+<?php
+$forumIcons = $block->getViewModel()->getAllIcons();
+if (is_array($forumIcons)):
+    $all = 1;
+?>
+    <div class="forum-topic-edit-icons">
+        <div class="forum-icons-placeholder">
+            <input type="radio" id="input-icon-none" <?= $block->getViewModel()->getCurrentIcon() == '' ? 'checked="checked"' : '' ?> name="icon_id[]" value="" />
+            <label for="input-icon-none"> <?= $block->escapeHtml(__('None')) ?></label>
+        </div>
+        <?php foreach ($forumIcons['ids'] as $forumIconId): ?>
+            <?php if (!($all % 3)): ?>
+                <div class="clearfix"></div>
+            <?php endif; ?>
+            <div class="forum-icons-placeholder">
+                <input <?= $block->getViewModel()->getCurrentIcon() == $forumIconId ? 'checked="checked"' : '' ?> type="radio" id="input-icon-<?= $block->escapeHtmlAttr($forumIconId) ?>" name="icon_id[]" value="<?= $block->escapeHtmlAttr($forumIconId) ?>" />
+                <label for="input-icon-<?= $block->escapeHtmlAttr($forumIconId) ?>">
+                    <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . $block->getViewModel()->getIconPath($forumIconId))) ?>" alt="" />
+                    <?= $block->escapeHtml(__($forumIcons['key'][$forumIconId])) ?>
+                </label>
+            </div>
+            <?php $all++; ?>
+        <?php endforeach; ?>
+    </div>
+    <div class="clearfix"></div>
+<?php endif; ?>

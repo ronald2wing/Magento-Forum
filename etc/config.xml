@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ronald2wing_forum>
+            <general>
+                <enabled>1</enabled>
+                <forum_route>forum</forum_route>
+            </general>
+            <frontend_general>
+                <forum_title>Magento Forum</forum_title>
+                <enable_search>1</enable_search>
+                <enable_bookmarks>1</enable_bookmarks>
+                <enable_jumpto>1</enable_jumpto>
+                <enable_rss>1</enable_rss>
+                <enable_icons>1</enable_icons>
+                <enable_statistic>1</enable_statistic>
+                <enable_whoisonline>1</enable_whoisonline>
+                <allow_delete_topics>0</allow_delete_topics>
+                <top_controls>1</top_controls>
+                <forum_page_layout>1column</forum_page_layout>
+            </frontend_general>
+            <meta_data>
+                <title>Magento Forum</title>
+                <meta_keywords>forum,magento,discussion</meta_keywords>
+                <meta_description>Magento Community Forum</meta_description>
+            </meta_data>
+            <notification>
+                <sender_email>owner@example.com</sender_email>
+                <sender_name>Forum Admin</sender_name>
+                <enable_notify_customer>1</enable_notify_customer>
+            </notification>
+        </ronald2wing_forum>
+    </default>
+</config>

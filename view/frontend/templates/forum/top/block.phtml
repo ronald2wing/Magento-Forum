@@ -1,0 +1,37 @@
+<?php if ($block->getViewModel()->getIsModerator()): ?>
+    <div class="forum-logged-moderator">
+        <?= $block->escapeHtml(__('You are logged as moderator')) ?>
+    </div>
+<?php endif; ?>
+<?php if ($block->getViewModel()->isTopControlsAllowed()): ?>
+    <div class="forum-top-controls">
+        <div class="forum-top-controls-myaccount">
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'my_account_icon.png')) ?>" alt="" />
+            <a href="<?= $block->escapeUrl($block->getViewModel()->getMyAccLink()) ?>">
+                <?= $block->escapeHtml(__('My Forum Account')) ?>
+            </a>
+        </div>
+        <div class="forum-top-controls-myposts">
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'forum_post.png')) ?>" alt="" />
+            <a href="<?= $block->escapeUrl($block->getViewModel()->getMyForumPostsLink()) ?>">
+                <?= $block->escapeHtml(__('My Forum Posts')) ?>
+            </a>
+        </div>
+        <div class="forum-top-controls-mytopics">
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'folder_topic.png')) ?>" alt="" />
+            <a href="<?= $block->escapeUrl($block->getViewModel()->getMyForumTopicsLink()) ?>">
+                <?= $block->escapeHtml(__('My Forum Topics')) ?>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>
+<h2 class="forum-title">
+    <?= $block->escapeHtml($block->getViewModel()->getForumTitle()) ?>
+</h2>
+<div class="forum-util clearfix">
+    <?= $block->getChildHtml('forum.ui.search') ?>
+    <?= $block->getChildHtml('forum.ui.rss') ?>
+    <?= $block->getChildHtml('forum.ui.bookmarks') ?>
+    <div class="clearfix">&nbsp;</div>
+    <?= $block->getChildHtml('forum.ui.jumpto') ?>
+</div>

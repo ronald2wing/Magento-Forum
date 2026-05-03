@@ -1,0 +1,81 @@
+<?php $currentTopic = $block->getViewModel()->getEditTopic(); ?>
+<form method="post" action="<?= $block->escapeUrl($block->getViewModel()->getSubmitForumUrl()) ?>" id="form-edit-topic">
+    <input type="hidden" value="<?= $block->escapeHtmlAttr($block->getViewModel()->getForumId()) ?>" name="<?= $block->escapeHtmlAttr($block->getViewModel()->getForumIdParamName()) ?>" />
+    <?php if ($block->getViewModel()->getTopicId()): ?>
+        <input type="hidden" value="<?= $block->escapeHtmlAttr($block->getViewModel()->getTopicId()) ?>" name="<?= $block->escapeHtmlAttr($block->getViewModel()->getTopicIdParamName()) ?>" />
+    <?php endif; ?>
+    <?php if ($block->getViewModel()->getPostId()): ?>
+        <input type="hidden" value="<?= $block->escapeHtmlAttr($block->getViewModel()->getPostId()) ?>" name="<?= $block->escapeHtmlAttr($block->getViewModel()->getPostIdParamName()) ?>" />
+    <?php endif; ?>
+    <?php if (!$currentTopic || $block->getViewModel()->getIsOwner($currentTopic)): ?>
+        <fieldset class="fieldset topic-details">
+            <legend class="legend"><?= $block->escapeHtml(__('Topic Details')) ?></legend>
+            <?php if ($block->getViewModel()->getIsIconsEnabled()): ?>
+                <div class="field field-topic-icons">
+                    <?= $block->getChildHtml('forum.edit.form.icons') ?>
+                </div>
+            <?php endif; ?>
+            <div class="field field-topic-title required">
+                <label for="forum-topic-title" class="label">
+                    <span><?= $block->escapeHtml(__('Topic Title')) ?></span>
+                </label>
+                <div class="control">
+                    <input
+                        type="text"
+                        id="forum-topic-title"
+                        name="title"
+                        title="<?= $block->escapeHtmlAttr(__('Topic Title')) ?>"
+                        class="input-text required-entry"
+                        data-validate="{required:true}"
+                        aria-required="true"
+                        value="<?= $block->escapeHtmlAttr($block->getViewModel()->getTopicTitle()) ?>"
+                    />
+                </div>
+            </div>
+            <div class="field field-topic-description required">
+                <label for="forum-topic-description" class="label">
+                    <span><?= $block->escapeHtml(__('Description')) ?></span>
+                </label>
+                <div class="control">
+                    <textarea id="forum-topic-description" name="description"><?= $block->escapeHtml($block->getViewModel()->getTopicDescription()) ?></textarea>
+                </div>
+            </div>
+        </fieldset>
+    <?php endif; ?>
+    <fieldset class="fieldset topic-post-details">
+        <legend class="legend"><?= $block->escapeHtml(__('Post')) ?></legend>
+        <div class="field field-topic-post">
+            <textarea id="editable_post" name="post"><?= $block->getViewModel()->getPostText() ?></textarea>
+        </div>
+    </fieldset>
+    <?php if ($block->getViewModel()->getIsCustomerNotificationEnabled()): ?>
+        <div class="field field-topic-notification required">
+            <input type="checkbox" id="notify_my" name="notify_my" />
+            <span>
+                <label for="notify_my">
+                    <?= $block->escapeHtml(__('Notify me if someone post on this Topic')) ?>
+                </label>
+            </span>
+        </div>
+    <?php endif; ?>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                <span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+            <button class="action save secondary" title="<?= $block->escapeHtmlAttr(__('Cancel')) ?>">
+                <span><?= $block->escapeHtml(__('Cancel')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<?= $block->getChildHtml('forum.edit.editor') ?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($) {
+        var dataForm = $('#form-edit-topic');
+        dataForm.mage('validation', {});
+    });
+</script>

@@ -1,0 +1,155 @@
+<?php
+$posts = $block->getViewModel()->getDisplayPosts();
+?>
+<div class="forum-list-container controls-exists clearfix">
+    <h3 class="grid-title">
+        <?php if ($block->getViewModel()->getIsIconsEnabled() && $block->getViewModel()->getIconSrc()): ?>
+            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . $block->getViewModel()->getIconSrc())) ?>" alt="" />
+        <?php endif; ?>
+        <?= $block->escapeHtml(__('View Topic "%1"', $block->getViewModel()->getTopicTitle())) ?>
+    </h3>
+    <div class="forum-grid-controls">
+        <button onclick="document.location.href = '<?= $block->escapeUrl($block->getViewModel()->getAddNewUrl()) ?>'" class="action primary" title="<?= $block->escapeHtmlAttr(__('Add Topic')) ?>">
+            <span><?= $block->escapeHtml(__('Add Topic')) ?></span>
+        </button>
+        <button onclick="document.location.href = '<?= $block->escapeUrl($block->getViewModel()->getAddPostNewUrl()) ?>'" class="action primary" title="<?= $block->escapeHtmlAttr(__('Add Post')) ?>">
+            <span><?= $block->escapeHtml(__('Add Post')) ?></span>
+        </button>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+    <?php if (!$posts || !$posts->getSize()): ?>
+        <div class="forum-grid-no-data">
+            <?= $block->escapeHtml(__('No Data Found')) ?>
+        </div>
+    <?php else: ?>
+        <div class="toolbar top forum-toolbar">
+            <?= $block->getPagerHtml() ?>
+        </div>
+        <div class="forum-sort">
+            <?= $block->escapeHtml(__('Sort By')) ?>
+            &nbsp;&nbsp;
+            <a <?= $block->getViewModel()->getSortType() == 'asc' ? 'class="selected"' : '' ?>
+               href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl(null, 'asc')) ?>"><?= $block->escapeHtml(__('Oldest')) ?></a>
+            &nbsp;|&nbsp;
+            <a <?= $block->getViewModel()->getSortType() == 'desc' ? 'class="selected"' : '' ?>
+               href="<?= $block->escapeUrl($block->getViewModel()->getSortUrl(null, 'desc')) ?>"><?= $block->escapeHtml(__('Newest')) ?></a>
+        </div>
+        <table class="forum-grid forum-list grid">
+            <thead>
+                <tr>
+                    <th width="25%"></th>
+                    <th width="75%">
+                        <?= $block->escapeHtml(__('Posts')) ?>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($posts as $post):
+                    $userDetails = $block->getViewModel()->getUserDetails($post->getUserId());
+                ?>
+                    <tr>
+                        <td>
+                            <div class="forum-avatar-image-container">
+                                <img src="<?= $block->escapeUrl($userDetails['avatar']) ?>" class="forum-avatar-image" alt="" />
+                            </div>
+                            <div class="forum-user-data-container">
+                                <span class="forum-user-nickname">
+                                    <a href="<?= $block->escapeUrl($userDetails['link']) ?>">
+                                        <?= $block->escapeHtml($userDetails['nickname']) ?>
+                                    </a>
+                                </span>
+                                <span class="forum-user-total-posts">
+                                    <?= $block->escapeHtml(__('Total posts: %1', $userDetails['total_posts'])) ?>
+                                </span>
+                                <?php if ($userDetails['joined']): ?>
+                                    <span class="forum-user-joined">
+                                        <?= $block->escapeHtml(__('Joined: %1', $block->getViewModel()->getTimeAccordingToTimeZone($userDetails['joined']))) ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="forum-post-view-container" id="<?= $block->escapeHtmlAttr($block->getViewModel()->getPostBlockId($post)) ?>">
+                                <?= $post->getContent() ?>
+                            </div>
+                            <?php if ($userDetails['signature']): ?>
+                                <div class="forum-user-signature">
+                                    <?= $userDetails['signature'] ?>
+                                    <hr>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($block->getViewModel()->getIsLoggedIn()): ?>
+                                <div class="forum-post-controls">
+                                    <?php if ($block->getViewModel()->getIsOwner($post)): ?>
+                                        <a href="<?= $block->escapeUrl($block->getViewModel()->getEditPostUrl($post)) ?>" class="forum-post-edit" title="<?= $block->escapeHtmlAttr(__('Edit')) ?>">
+                                            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'edit_icon.png')) ?>" alt="" />
+                                            <?= $block->escapeHtml(__('Edit')) ?>
+                                        </a>
+                                        <a href="<?= $block->escapeUrl($block->getViewModel()->getDeletePostUrl($post)) ?>" class="forum-post-delete" title="<?= $block->escapeHtmlAttr(__('Delete')) ?>">
+                                            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'delete_icon.png')) ?>" alt="" />
+                                            <?= $block->escapeHtml(__('Delete')) ?>
+                                        </a>
+                                    <?php endif; ?>
+                                    <form method="post" action="<?= $block->escapeUrl($block->getViewModel()->getReportPostUrl($post)) ?>" style="display:inline;">
+                                        <?= $block->getBlockHtml('formkey') ?>
+                                        <button type="submit" class="forum-post-report" title="<?= $block->escapeHtmlAttr(__('Report')) ?>" style="background:none;border:none;padding:0;cursor:pointer;color:#e02b27;">
+                                            <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'report_icon.png')) ?>" alt="" style="display:none;" onerror="this.parentElement.innerHTML = '<?= $block->escapeHtml(__('Report')) ?>';" />
+                                            <?= $block->escapeHtml(__('Report')) ?>
+                                        </button>
+                                    </form>
+                                </div>
+                            <?php endif; ?>
+                            <?= $block->escapeHtml(__('Posted: %1', $block->getViewModel()->getPostTime($post))) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <div class="clearfix">&nbsp;</div>
+        <div class="forum-grid-controls">
+            <?php if ($block->getViewModel()->getIsLoggedIn()): ?>
+                <button class="action primary" onclick="___ronald2wing_showEditor();" title="<?= $block->escapeHtmlAttr(__('Fast Reply')) ?>">
+                    <span><?= $block->escapeHtml(__('Fast Reply')) ?></span>
+                </button>
+            <?php endif; ?>
+            <button onclick="document.location.href = '<?= $block->escapeUrl($block->getViewModel()->getAddNewUrl()) ?>'" class="action primary" title="<?= $block->escapeHtmlAttr(__('Add Topic')) ?>">
+                <span><?= $block->escapeHtml(__('Add Topic')) ?></span>
+            </button>
+            <button onclick="document.location.href = '<?= $block->escapeUrl($block->getViewModel()->getAddPostNewUrl()) ?>'" class="action primary" title="<?= $block->escapeHtmlAttr(__('Add Post')) ?>">
+                <span><?= $block->escapeHtml(__('Add Post')) ?></span>
+            </button>
+        </div>
+        <div class="clearfix">&nbsp;</div>
+        <?php if ($block->getViewModel()->getIsLoggedIn()): ?>
+            <div class="forum-editor" id="ronald2wing-editor" style="display:none;">
+                <form method="post" action="<?= $block->escapeUrl($block->getViewModel()->getActionPost()) ?>">
+                    <input type="hidden" value="<?= $block->escapeHtmlAttr($block->getViewModel()->getForumId()) ?>" name="<?= $block->escapeHtmlAttr($block->getViewModel()->getForumIdParamName()) ?>" />
+                    <input type="hidden" value="<?= $block->escapeHtmlAttr($block->getViewModel()->getTopicId()) ?>" name="<?= $block->escapeHtmlAttr($block->getViewModel()->getTopicIdParamName()) ?>" />
+                    <input type="hidden" value="1" name="post_only" />
+                    <textarea name="post"></textarea>
+                    <div class="clearfix"><br></div>
+                    <?php if ($block->getViewModel()->getIsCustomerNotificationEnabled()): ?>
+                        <div class="field field-topic-notification required">
+                            <input type="checkbox" id="notify_my" name="notify_my" />
+                            <span>
+                                <label for="notify_my">
+                                    <?= $block->escapeHtml(__('Notify me if someone post on this Topic')) ?>
+                                </label>
+                            </span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="forum-grid-controls">
+                        <button onclick="___ronald2wing_hideEditor();" class="action secondary" type="button" title="<?= $block->escapeHtmlAttr(__('Cancel')) ?>">
+                            <span><?= $block->escapeHtml(__('Cancel')) ?></span>
+                        </button>
+                        <button class="action primary" type="submit" title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                            <span><?= $block->escapeHtml(__('Save')) ?></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <?= $block->getChildHtml('ronald2wing.editor.short') ?>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>

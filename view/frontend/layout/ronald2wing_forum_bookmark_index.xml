@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <head>
+    <css src="Ronald2Wing_Forum/css/forum.css"/>
+    <link src="Ronald2Wing_Forum/js/forum.js"/>
+  </head>
+  <body>
+    <referenceBlock name="breadcrumbs">
+      <action method="addCrumb">
+        <argument name="crumbName" xsi:type="string">Home</argument>
+        <argument name="crumbInfo" xsi:type="array">
+          <item translate="true" name="title" xsi:type="string">Home</item>
+          <item translate="true" name="label" xsi:type="string">Home</item>
+          <item name="link" xsi:type="string">/</item>
+        </argument>
+      </action>
+    </referenceBlock>
+    <referenceContainer name="content">
+      <block cacheable="false" class="Magento\Framework\View\Element\Template" name="forum.bookmark.index" template="Ronald2Wing_Forum::bookmark/index.phtml">
+        <arguments>
+          <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Bookmark\Index</argument>
+          <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+        </arguments>
+        <block class="Magento\Framework\View\Element\Template" name="forum.index.top" template="Ronald2Wing_Forum::forum/top/block.phtml">
+          <arguments>
+            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Forum\TopBlock</argument>
+            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+          </arguments>
+          <block class="Magento\Framework\View\Element\Template" name="forum.ui.jumpto" template="Ronald2Wing_Forum::ui/jumpto.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Ui\JumpTo</argument>
+                            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+                        </arguments>
+          </block>
+        </block>
+        <block class="Magento\Framework\View\Element\Template" name="forum.index.bottom" template="Ronald2Wing_Forum::forum/bottom/block.phtml">
+          <arguments>
+            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Forum\TopBlock</argument>
+            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+          </arguments>
+          <block class="Magento\Framework\View\Element\Template" name="forum.ui.statistic.bottom" template="Ronald2Wing_Forum::ui/statistic.phtml">
+          </block>
+          <block class="Magento\Framework\View\Element\Template" name="forum.ui.whoisonline.bottom" template="Ronald2Wing_Forum::ui/who_is_online/forum.phtml">
+          </block>
+        </block>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

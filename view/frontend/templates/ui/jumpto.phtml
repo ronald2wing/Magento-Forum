@@ -1,0 +1,23 @@
+<?php
+if ($block->getForumData()->isJumpToAllowed()):
+    $forums = $block->getAllForums();
+    if ($forums->getSize()):
+?>
+        <div class="forum-jumpto-container">
+            <div class="forum-jump-to-label">&lt; <?= $block->escapeHtml(__('Jump To Forum')) ?> &gt;</div>
+            <select onchange="ronald2wingForumRedirectTo(this.value)">
+                <option value=""><?= $block->escapeHtml(__('Select Forum')) ?></option>
+                <?php foreach ($forums as $forum): ?>
+                    <option value="<?= $block->escapeUrl($block->getForumViewUrl($forum)) ?>"><?= $block->escapeHtml($forum->getTitle()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <script type="text/javascript">
+            function ronald2wingForumRedirectTo(url) {
+                if (url) {
+                    document.location.href = url;
+                }
+            }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

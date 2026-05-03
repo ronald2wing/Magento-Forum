@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <head>
+    <css src="Ronald2Wing_Forum/css/forum.css"/>
+  </head>
+  <body>
+    <referenceBlock name="breadcrumbs">
+      <action method="addCrumb">
+        <argument name="crumbName" xsi:type="string">Home</argument>
+        <argument name="crumbInfo" xsi:type="array">
+          <item translate="true" name="title" xsi:type="string">Home</item>
+          <item translate="true" name="label" xsi:type="string">Home</item>
+          <item name="link" xsi:type="string">/</item>
+        </argument>
+      </action>
+    </referenceBlock>
+    <referenceContainer name="content">
+      <block cacheable="false" class="Magento\Framework\View\Element\Template" name="forum.search.index" template="Ronald2Wing_Forum::search/index.phtml">
+        <arguments>
+          <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Search\Index</argument>
+          <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+        </arguments>
+        <block class="Magento\Framework\View\Element\Template" name="forum.index.top" template="Ronald2Wing_Forum::forum/top/block.phtml">
+          <arguments>
+            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Forum\TopBlock</argument>
+            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+          </arguments>
+          <block class="Magento\Framework\View\Element\Template" name="forum.ui.search" template="Ronald2Wing_Forum::ui/form_search.phtml">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Ui\FormSearch</argument>
+                            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+                        </arguments>
+          </block>
+        </block>
+        <block cacheable="false" class="Magento\Framework\View\Element\Template" name="forum.search.grid.topics" template="Ronald2Wing_Forum::search/index/topics.phtml">
+          <arguments>
+            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Search\GridTopic</argument>
+            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+          </arguments>
+        </block>
+        <block cacheable="false" class="Magento\Framework\View\Element\Template" name="forum.search.grid.posts" template="Ronald2Wing_Forum::search/index/posts.phtml">
+          <arguments>
+            <argument name="view_model" xsi:type="object">Ronald2Wing\Forum\ViewModel\Search\Grid</argument>
+            <argument name="forum_data" xsi:type="object">Ronald2Wing\Forum\Helper\Data</argument>
+          </arguments>
+        </block>
+      </block>
+    </referenceContainer>
+  </body>
+</page>

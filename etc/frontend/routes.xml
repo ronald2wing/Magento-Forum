@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="ronald2wing_forum" frontName="ronald2wing_forum">
+            <module name="Ronald2Wing_Forum" />
+        </route>
+    </router>
+</config>

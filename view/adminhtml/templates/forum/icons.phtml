@@ -1,0 +1,26 @@
+<?php
+$forumIcons = $block->getAllIcons();
+$forumIconPath = $block->getIconPath();
+?>
+<fieldset class="fieldset">
+    <legend class="legend">
+        <span><?= $block->escapeHtml(__('Select Forum Icon')) ?></span>
+    </legend>
+    <div class="ronald2wing-forum-icons">
+        <ul class="ronald2wing-forum-icons-list">
+            <li class="ronald2wing-forum-icon-item" id="icon-none">
+                <input type="radio" id="input-icon-none" <?= $block->getCurrentIcon() == '' ? 'checked="checked"' : '' ?> name="icon_id[]" value="" />
+                <label for="input-icon-none"><?= $block->escapeHtml(__('None')) ?></label>
+            </li>
+            <?php foreach ($forumIcons['ids'] as $forumIconId): ?>
+                <li class="ronald2wing-forum-icon-item" id="icon-<?= $block->escapeHtmlAttr($forumIconId) ?>">
+                    <input <?= $block->getCurrentIcon() == $forumIconId ? 'checked="checked"' : '' ?> type="radio" id="input-icon-<?= $block->escapeHtmlAttr($forumIconId) ?>" name="icon_id[]" value="<?= $block->escapeHtmlAttr($forumIconId) ?>" />
+                    <label for="input-icon-<?= $block->escapeHtmlAttr($forumIconId) ?>">
+                        <img src="<?= $block->escapeUrl($block->getViewFileUrl('Ronald2Wing_Forum::' . $forumIconPath . $forumIcons['img'][$forumIconId])) ?>" alt="" />
+                        <?= $block->escapeHtml(__($forumIcons['key'][$forumIconId])) ?>
+                    </label>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</fieldset>

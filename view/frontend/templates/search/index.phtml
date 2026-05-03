@@ -1,0 +1,21 @@
+<div class="main-forum-container">
+    <div class="forum-top-block">
+        <?= $block->getChildHtml('forum.index.top') ?>
+    </div>
+    <div class="forum-search-type-controls">
+        <a href="<?= $block->escapeUrl($block->getViewModel()->getSearchByPost()) ?>" <?= $block->getViewModel()->getIsSearchPost() ? 'class="active"' : '' ?>><?= $block->escapeHtml(__('Search By Post')) ?></a>&nbsp;|&nbsp;
+        <a href="<?= $block->escapeUrl($block->getViewModel()->getSearchByTopic()) ?>" <?= $block->getViewModel()->getIsSearchTopic() ? 'class="active"' : '' ?>><?= $block->escapeHtml(__('Search By Topic')) ?></a>
+    </div>
+    <div class="forum-content-container forum-content-search-container">
+        <div class="forum-list-container clearfix">
+            <h3 class="grid-title">
+                <?= $block->escapeHtml(__('Search Results for "%1"', $block->getViewModel()->getSearchPhrase())) ?>
+            </h3>
+            <?php if ($block->getViewModel()->getIsSearchPost()): ?>
+                <?= $block->getChildHtml('forum.search.grid.posts') ?>
+            <?php else: ?>
+                <?= $block->getChildHtml('forum.search.grid.topics') ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
